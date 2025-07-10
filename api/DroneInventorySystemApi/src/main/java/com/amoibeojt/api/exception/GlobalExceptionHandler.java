@@ -17,18 +17,70 @@ import com.amoibeojt.api.dto.ErrorResponseDTO;
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponseDTO> handleAllExceptions(Exception ex) {
+	
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<ErrorResponseDTO> handleUnauthorized(UnauthorizedException ex) {
         ErrorResponseDTO error = new ErrorResponseDTO(
             "error",
-            "予期しないエラーが発生しました",
-            "INTERNAL_ERROR",
+            "認証に失敗しました",
+            "UNAUTHORIZED",
             ex.getMessage(),
             ZonedDateTime.now().toString()
         );
+        
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+    }
 
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<ErrorResponseDTO> handleForbidden(ForbiddenException ex) {
+        ErrorResponseDTO error = new ErrorResponseDTO(
+            "error",
+        	"権限がありません",
+            "FORBIDDEN",
+            ex.getMessage(),
+            ZonedDateTime.now().toString()
+        );
+        
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorResponseDTO> handleNotFound(ResourceNotFoundException ex) {
+        ErrorResponseDTO error = new ErrorResponseDTO(
+            "error",
+            "リソースが見つかりません",
+            "RESOURCE_NOT_FOUND",
+            ex.getMessage(),
+            ZonedDateTime.now().toString()
+        );
+        
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+	
+    @ExceptionHandler(DuplicateRequestException.class)
+    public ResponseEntity<ErrorResponseDTO> handleConflict(DuplicateRequestException ex) {
+        ErrorResponseDTO error = new ErrorResponseDTO(
+            "error",
+            "重複リクエストです",
+            "DUPLICATE_REQUEST",
+            ex.getMessage(),
+            ZonedDateTime.now().toString()
+        );
+        
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+    }
+	
+    @ExceptionHandler(InsufficientStockException.class)
+    public ResponseEntity<ErrorResponseDTO> handleInsufficientStock(InsufficientStockException ex) {
+        ErrorResponseDTO error = new ErrorResponseDTO(
+            "error",
+            "在庫が不足しています",
+            "INSUFFICIENT_STOCK",
+            ex.getMessage(),
+            ZonedDateTime.now().toString()
+        );
+        
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(error);
     }
 
     @ExceptionHandler(InvalidInputException.class)
@@ -42,5 +94,18 @@ public class GlobalExceptionHandler {
         );
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+    
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponseDTO> handleAllExceptions(Exception ex) {
+        ErrorResponseDTO error = new ErrorResponseDTO(
+            "error",
+            "予期しないエラーが発生しました",
+            "INTERNAL_ERROR",
+            ex.getMessage(),
+            ZonedDateTime.now().toString()
+        );
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
 }
