@@ -3,6 +3,11 @@ package com.amoibeojt.api.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+/**
+ * エラーメッセージをJSON形式で返却する
+ *
+ * @author yure name
+ */
 @Data
 @AllArgsConstructor
 public class ErrorResponseDTO {

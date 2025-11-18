@@ -6,6 +6,7 @@ import lombok.Data;
 /**
  * レスポンスメッセージをJSON形式で返却する
  *
+ * @author yure name
  */
 @Data
 @AllArgsConstructor

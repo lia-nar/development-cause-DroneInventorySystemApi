@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,35 +30,42 @@ public class CenterInfo {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "center_id")
-	private int centerId;
+    private Integer centerId;
+
+    @Column(name = "center_name", length = 200, nullable = false)
+    private String centerName;
+
+    @Column(name = "post_code", length = 20)
+    private String postCode;
+
+    @Column(name = "address", length = 255)
+    private String address;
+
+    @Column(name = "phone_number", length = 20)
+    private String phoneNumber;
+
+    @Column(name = "manager_name", length = 100)
+    private String managerName;
+
+    @Column(name = "operational_status", length = 50)
+    private String operationalStatus;
+
+    @Column(name = "max_storage_capacity")
+    private int maxStorageCapacity;
+
+    @Column(name = "current_storage_capacity")
+    private int currentStorageCapacity;
+
+    @Column(name = "notes", columnDefinition = "TEXT")
+    private String notes;
+
+    @Column(name = "delete_flag", nullable = false)
+    private Boolean deleteFlag;
+
+    @Column(name = "create_date", nullable = false)
+    private LocalDateTime createDate;
+
+    @Column(name = "update_date", nullable = false)
+    private LocalDateTime updateDate;
 	
-	@Column(name = "center_name")
-	private String centerName;
-	
-	@Column(name = "address")
-	private String address;
-	
-	@Column(name = "phone_number")
-	private String phoneNumber;
-	
-	@Column(name = "manager_name")
-	private String managerName;
-	
-	@Column(name = "operational_status")
-	private int operationalStatus;
-	
-	@Column(name = "max_storage_capacity")
-	private String maxStorageCapacity;
-	
-	@Column(name = "current_storage_capacity")
-	private String currentStorageCapacity;
-	
-	@Column(name = "delete_flag")
-	private String deleteFlag;
-	
-	@Column(name = "update_date")
-	private LocalDateTime updateDate;
-	
-	@Column(name = "create_date")
-	private LocalDateTime createDate;
 }

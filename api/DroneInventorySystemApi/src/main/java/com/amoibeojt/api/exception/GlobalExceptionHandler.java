@@ -2,10 +2,13 @@ package com.amoibeojt.api.exception;
 
 import java.time.ZonedDateTime;
 
+import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import com.amoibeojt.api.dto.ErrorResponseDTO;
 
@@ -83,7 +86,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(error);
     }
 
-    @ExceptionHandler(InvalidInputException.class)
+    @ExceptionHandler({InvalidInputException.class, MethodArgumentTypeMismatchException.class,
+    	ConversionFailedException.class,MissingServletRequestParameterException.class})
     public ResponseEntity<ErrorResponseDTO> handleInvalidInput(InvalidInputException ex) {
         ErrorResponseDTO error = new ErrorResponseDTO(
             "error",
